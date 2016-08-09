@@ -70,7 +70,11 @@ var setCurrentAlbum = function(album) {
      $albumReleaseInfo.text(album.year + ' ' + album.label);
      $albumImage.attr('src', album.albumArtUrl);
     
+<<<<<<< HEAD
      $albumSongList.empty();
+=======
+    $albumSongList.empty();
+>>>>>>> checkpoint-30-jquery-collection-album-views
     
     for (i = 0; i < album.songs.length; i++) {
          var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
