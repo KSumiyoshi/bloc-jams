@@ -42,7 +42,7 @@
     margin-right: 16.5%;
 }
 
-.player-bar. main-controls .play-pause {
+.player-bar .main-controls .play-pause {
     margin-right: 15%;
     font-size: 1.6rem;
 }
@@ -122,7 +122,10 @@
     cursor: pointer;
     -webkit-transition: all 100ms ease-in-out;
         -moz-transition: all 100ms ease-in-out;
-            transition: all 100ms ease-in-out;
+            transition: width 100ms ease-in-out,
+                 height 100ms ease-in-out,
+                 margin-top 100ms ease-in-out,
+                 margin-left 100ms ease-in-out;
 }
 
 .seek-bar:hover .thumb {
