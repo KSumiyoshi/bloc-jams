@@ -10,7 +10,7 @@ var setSong = function(songNumber) {
         preload: true
      });
     
-    setVolume(cuurentVolume);
+    setVolume(currentVolume);
 };
 
 var setVolume = function(volume) {
@@ -40,7 +40,6 @@ var clickHandler = function() {
 
 	if (currentlyPlayingSongNumber !== null) {
 		var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
-        currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
         currentlyPlayingCell.html(currentlyPlayingSongNumber);
 	}
 	if (currentlyPlayingSongNumber !== songNumber) {
@@ -146,6 +145,26 @@ var nextSong = function() {
     $lastSongNumberCell.html(lastSongNumber);
     
 };
+var togglePlayFromPlayerBar = function() {
+    console.log(this);
+    var currentlyPlayingCell = getSongNumberCell(currentlyPlayingSongNumber);
+    
+    /*
+    If song is paused and play button is clicked, the change the song number to pause button and change the player bar's play button to pause. Play song. Else if the song is playing, change the song number cell to a play button and change the player bar's button to play button. Pause song.
+    */
+    if (currentSoundFile) {
+        if (currentSoundFile.isPaused()) {
+            $(this).html(playerBarPauseButton);
+            currentlyPlayingCell.html(pauseButtonTemplate);
+            currentSoundFile.play();
+            } else {
+            $(this).html(playerBarPlayButton);    
+            currentlyPlayingCell.html(playButtonTemplate);    
+            currentSoundFile.pause();
+            }
+    }
+    
+};
 
 var previousSong = function() {
     
@@ -200,19 +219,18 @@ var currentAlbum = null;
 var currentlyPlayingSongNumber = null;
 var currentSongFromAlbum = null;
 var currentSoundFile = null;
+var currentVolume = 80;
 
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
+var $playPauseButton = $('.main-controls .play-pause');
+
 
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
     $previousButton.click(previousSong);
     $nextButton.click(nextSong);
-for (var i = 0; i < songRows.length; i++) {
-    songRows[i].addEventListener('click', function(event) {
-             clickHandler(event.target);
-         });
-    } 
+    $playPauseButton.click(togglePlayFromPlayerBar);
 }); 
     
