@@ -114,7 +114,7 @@ var setCurrentAlbum = function(album) {
      $albumSongList.empty();
     
     for (i = 0; i < album.songs.length; i++) {
-        var $newRow = createSongRow(i + 1, album.songs[i].name, album.songs[i].length);
+        var $newRow = createSongRow(i + 1, album.songs[i].title, album.songs[i].duration);
         $albumSongList.append($newRow);
     }
     
@@ -131,7 +131,25 @@ var setCurrentAlbum = function(album) {
              updateSeekPercentage($seekBar, seekBarFillRatio);
          });
      }
+    var setCurrentTimeInPlayerBar = function(currentTime) {
+         $('.current-time').text();
+     }
+     var setTotalTimeInPlayerBar = function(totalTime) {
+         $('.total-time').text();
+     }
  };
+
+var filterTimeCode = function(timeInSeconds) {
+  var getSeconds = parseFloat(timeInSeconds);
+  var getMinutes = Math.floor(timeInSeconds / 60);
+  getSeconds = Math.floor(timeInSeconds % 60);
+  return getMinutes + ":" + getSeconds;
+
+    filterTimeCode(currentTime, totalTime);
+    filterTimeCode(songLength);
+};
+
+
 
 var updateSeekPercentage = function($seekBar, seekBarFillRatio) {
     var offsetXPercent = seekBarFillRatio * 100;
@@ -238,9 +256,9 @@ var nextSong = function() {
     updatePlayerBarSong();
 
     // Update the Player Bar information
-    $('.currently-playing .song-name').text(currentSongFromAlbum.name);
+    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
-    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.name + " - " + currentAlbum.title);
+    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.name);
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
@@ -294,9 +312,9 @@ var previousSong = function() {
     updatePlayerBarSong();
 
     // Update the Player Bar information
-    $('.currently-playing .song-name').text(currentSongFromAlbum.name);
+    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
     $('.currently-playing .artist-name').text(currentAlbum.artist);
-    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.name + " - " + currentAlbum.title);
+    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.name);
     $('.main-controls .play-pause').html(playerBarPauseButton);
     
     var lastSongNumber = getLastSongNumber(currentSongIndex);
@@ -309,9 +327,9 @@ var previousSong = function() {
 };
 
 var updatePlayerBarSong = function() {
-    $('.currently-playing .song-name').text(currentSongFromAlbum.name);
+    $('.currently-playing .song-name').text(currentSongFromAlbum.title);
     $('.currently-plaing .artist-name').text(currentAlbum.artist);
-    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.name + " - " + currentAlbum.artist);
+    $('.currently-playing .artist-song-mobile').text(currentSongFromAlbum.title + " - " + currentAlbum.artist);
     $('.main-controls .play-pause').html(playerBarPauseButton);    
 };
 
@@ -329,8 +347,6 @@ var currentVolume = 80;
 var $previousButton = $('.main-controls .previous');
 var $nextButton = $('.main-controls .next');
 var $playPauseButton = $('.main-controls .play-pause');
-
-
 
 $(document).ready(function() {
     setCurrentAlbum(albumPicasso);
